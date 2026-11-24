@@ -1,0 +1,87 @@
+{
+ "backbone": "dinov2_vits14",
+ "epochs_planned": 10,
+ "epochs_done": 10,
+ "history": [
+  {
+   "epoch": 1,
+   "train_loss": 4.1953038285662245,
+   "val_loss": 1.8706939842389978,
+   "val_corner_px_median": 1.3639006614685059,
+   "val_corner_px_mean": 1.871935248374939,
+   "sec": 265.3988070487976
+  },
+  {
+   "epoch": 2,
+   "train_loss": 1.4363177306168562,
+   "val_loss": 1.6592680008515068,
+   "val_corner_px_median": 1.3505947589874268,
+   "val_corner_px_mean": 1.690514087677002,
+   "sec": 273.0975742340088
+  },
+  {
+   "epoch": 3,
+   "train_loss": 1.181334508882536,
+   "val_loss": 1.4979368137276692,
+   "val_corner_px_median": 1.2630537748336792,
+   "val_corner_px_mean": 1.5303692817687988,
+   "sec": 271.2367959022522
+  },
+  {
+   "epoch": 4,
+   "train_loss": 1.0535403669297279,
+   "val_loss": 1.3799149705016094,
+   "val_corner_px_median": 1.143933892250061,
+   "val_corner_px_mean": 1.4250246286392212,
+   "sec": 285.10749912261963
+  },
+  {
+   "epoch": 5,
+   "train_loss": 0.9516250007636063,
+   "val_loss": 1.3737216306769329,
+   "val_corner_px_median": 1.1498820781707764,
+   "val_corner_px_mean": 1.4182684421539307,
+   "sec": 283.04032492637634
+  },
+  {
+   "epoch": 6,
+   "train_loss": 0.8541853727994265,
+   "val_loss": 1.3061552436455437,
+   "val_corner_px_median": 1.0982612371444702,
+   "val_corner_px_mean": 1.326360821723938,
+   "sec": 292.65209698677063
+  },
+  {
+   "epoch": 7,
+   "train_loss": 0.7954519224333596,
+   "val_loss": 1.2781420116839202,
+   "val_corner_px_median": 1.0953410863876343,
+   "val_corner_px_mean": 1.3033888339996338,
+   "sec": 288.29398226737976
+  },
+  {
+   "epoch": 8,
+   "train_loss": 0.746969475195958,
+   "val_loss": 1.3118001429930977,
+   "val_corner_px_median": 1.1082477569580078,
+   "val_corner_px_mean": 1.3251276016235352,
+   "sec": 282.3790326118469
+  },
+  {
+   "epoch": 9,
+   "train_loss": 0.7023021141132275,
+   "val_loss": 1.3140560855036196,
+   "val_corner_px_median": 1.1067616939544678,
+   "val_corner_px_mean": 1.323979377746582,
+   "sec": 288.7445259094238
+  },
+  {
+   "epoch": 10,
+   "train_loss": 0.6843286410911934,
+   "val_loss": 1.31069241658501,
+   "val_corner_px_median": 1.1046878099441528,
+   "val_corner_px_mean": 1.318956732749939,
+   "sec": 292.02947306632996
+  }
+ ]
+}

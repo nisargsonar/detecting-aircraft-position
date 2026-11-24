@@ -1,0 +1,18 @@
+# Dataset (download separately, see README)
+data/images/
+data/m_*.csv
+data/*.log
+
+# Model checkpoints (93-389 MB each, over GitHub's 100 MB limit)
+*.pt
+*.npy
+
+# Third-party released YOLOv8-Pose predictions (AGPL-3.0, see README) and the large table derived from them
+baselines/yolov8pose_IN_ODD_predictions.json
+baselines/results_yolov8pose.csv
+baselines/eval.log
+
+# System / Python
+.DS_Store
+__pycache__/
+*.pyc

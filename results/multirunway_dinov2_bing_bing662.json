@@ -1,0 +1,17 @@
+{
+ "run": "dinov2_bing",
+ "test": "bing662",
+ "n_images": 55,
+ "single_runway_median_m": 488.1,
+ "joint_median_m": 43.1,
+ "diff_ci95": [
+  -508.7,
+  -256.3
+ ],
+ "joint_better_pct": 92.7,
+ "wrong_runway": {
+  "n_images": 55,
+  "correct_pct": 96.4,
+  "median_true_lateral_gap_deg": 1.53
+ }
+}

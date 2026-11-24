@@ -1,0 +1,924 @@
+{
+ "notes": [
+  "All numbers measured; IN_ODD runways only; n stated per entry.",
+  "Crops use the released YOLO detector boxes (IoU>=0.3, score>=0.25) for every model.",
+  "YOLO keypoint comparisons use Bing only; Flight Simulator compares our own models (released YOLO may have seen it).",
+  "Released YOLO training config uses the LARD test split as validation (possible optimistic bias in YOLO numbers).",
+  "16-point PnP returned no physically valid pose on 6 of 1,086 Bing and 12 of 1,088 Flight Simulator runways; paired 16-vs-4 comparisons drop those (n = 1,080 / 1,076), the per-model medians do not.",
+  "Run A is the only model that saw X-Plane in training; ResNet-50 and DINOv2 rows trained on the 4,599-crop Bing subset.",
+  "Validation corner errors use the true box with a fixed small jitter; test errors use detector-box crops."
+ ],
+ "cnn_vs_vit_bing662": {
+  "test": "Bing Maps, the 662 Nov-6 test runways",
+  "yolov8_pose": {
+   "n": 662,
+   "corner_px_median": 1.39,
+   "corner_px_mean": 1.64,
+   "pck1": 25.8,
+   "pck2": 76.3,
+   "pos_median_m": 302.5,
+   "pos_over_1km_pct": 12.8,
+   "lat_median_deg": 0.155,
+   "glide_median_deg": 0.209,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 189,
+     "pos_median_m": 119.6,
+     "corner_px_median": 1.88
+    },
+    "mid 2.5-4.5 km": {
+     "n": 239,
+     "pos_median_m": 377.1,
+     "corner_px_median": 1.28
+    },
+    "far >4.5 km": {
+     "n": 234,
+     "pos_median_m": 495.5,
+     "corner_px_median": 1.27
+    }
+   }
+  },
+  "resnet50": {
+   "n": 662,
+   "corner_px_median": 1.12,
+   "corner_px_mean": 1.45,
+   "pck1": 39.3,
+   "pck2": 83.8,
+   "pos_median_m": 320.1,
+   "pos_over_1km_pct": 10.6,
+   "lat_median_deg": 0.149,
+   "glide_median_deg": 0.239,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 189,
+     "pos_median_m": 100.9,
+     "corner_px_median": 1.73
+    },
+    "mid 2.5-4.5 km": {
+     "n": 239,
+     "pos_median_m": 375.6,
+     "corner_px_median": 1.04
+    },
+    "far >4.5 km": {
+     "n": 234,
+     "pos_median_m": 528.0,
+     "corner_px_median": 1.0
+    }
+   }
+  },
+  "dinov2_vits14": {
+   "n": 662,
+   "corner_px_median": 1.13,
+   "corner_px_mean": 1.42,
+   "pck1": 39.7,
+   "pck2": 84.1,
+   "pos_median_m": 349.6,
+   "pos_over_1km_pct": 14.2,
+   "lat_median_deg": 0.124,
+   "glide_median_deg": 0.243,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 189,
+     "pos_median_m": 88.6,
+     "corner_px_median": 1.65
+    },
+    "mid 2.5-4.5 km": {
+     "n": 239,
+     "pos_median_m": 404.4,
+     "corner_px_median": 1.03
+    },
+    "far >4.5 km": {
+     "n": 234,
+     "pos_median_m": 632.1,
+     "corner_px_median": 1.02
+    }
+   }
+  },
+  "dinov2_epochs": "10 of 10",
+  "dinov2_vs_resnet50_corner_px": {
+   "n": 662,
+   "median_a": 1.13,
+   "median_b": 1.12,
+   "diff": 0.0,
+   "ci95": [
+    -0.04,
+    0.05
+   ],
+   "a_better_pct": 50.9
+  },
+  "dinov2_vs_resnet50_pos_m": {
+   "n": 662,
+   "median_a": 349.56,
+   "median_b": 320.08,
+   "diff": 29.48,
+   "ci95": [
+    -15.37,
+    63.53
+   ],
+   "a_better_pct": 46.5
+  },
+  "dinov2_vs_yolo_corner_px": {
+   "n": 662,
+   "median_a": 1.13,
+   "median_b": 1.39,
+   "diff": -0.26,
+   "ci95": [
+    -0.32,
+    -0.21
+   ],
+   "a_better_pct": 66.5
+  },
+  "dinov2_vs_yolo_pos_m": {
+   "n": 662,
+   "median_a": 349.56,
+   "median_b": 302.47,
+   "diff": 47.09,
+   "ci95": [
+    -10.15,
+    88.71
+   ],
+   "a_better_pct": 47.1
+  },
+  "resnet50_vs_yolo_corner_px": {
+   "n": 662,
+   "median_a": 1.12,
+   "median_b": 1.39,
+   "diff": -0.27,
+   "ci95": [
+    -0.32,
+    -0.22
+   ],
+   "a_better_pct": 66.3
+  },
+  "resnet50_vs_yolo_pos_m": {
+   "n": 662,
+   "median_a": 320.08,
+   "median_b": 302.47,
+   "diff": 17.61,
+   "ci95": [
+    -34.66,
+    65.95
+   ],
+   "a_better_pct": 51.4
+  }
+ },
+ "runA_bing_all": {
+  "test": "bing_all",
+  "runA_4pt": {
+   "n": 1086,
+   "corner_px_median": 1.06,
+   "corner_px_mean": 1.35,
+   "pck1": 44.4,
+   "pck2": 86.2,
+   "pos_median_m": 288.8,
+   "pos_over_1km_pct": 11.6,
+   "lat_median_deg": 0.133,
+   "glide_median_deg": 0.212,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 73.1,
+     "corner_px_median": 1.51
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 351.8,
+     "corner_px_median": 0.97
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 564.5,
+     "corner_px_median": 0.96
+    }
+   }
+  },
+  "runA_16pt": {
+   "n": 1086,
+   "corner_px_median": 1.06,
+   "corner_px_mean": 1.35,
+   "pck1": 44.4,
+   "pck2": 86.2,
+   "pos_median_m": 290.5,
+   "pos_over_1km_pct": 11.3,
+   "lat_median_deg": 0.128,
+   "glide_median_deg": 0.205,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 84.7,
+     "corner_px_median": 1.51
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 369.9,
+     "corner_px_median": 0.97
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 588.9,
+     "corner_px_median": 0.96
+    }
+   }
+  },
+  "pnp16_vs_pnp4_pos_m": {
+   "n": 1080,
+   "median_a": 290.47,
+   "median_b": 288.31,
+   "diff": 2.16,
+   "ci95": [
+    -14.53,
+    25.46
+   ],
+   "a_better_pct": 48.0
+  },
+  "yolov8_pose_same_runways": {
+   "n": 1086,
+   "corner_px_median": 1.39,
+   "corner_px_mean": 1.67,
+   "pck1": 25.1,
+   "pck2": 76.2,
+   "pos_median_m": 308.5,
+   "pos_over_1km_pct": 13.7,
+   "lat_median_deg": 0.152,
+   "glide_median_deg": 0.22,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 107.3,
+     "corner_px_median": 1.87
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 394.2,
+     "corner_px_median": 1.28
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 525.3,
+     "corner_px_median": 1.21
+    }
+   }
+  },
+  "runA16_vs_yolo_pos_m": {
+   "n": 1080,
+   "median_a": 290.47,
+   "median_b": 306.09,
+   "diff": -15.63,
+   "ci95": [
+    -54.48,
+    21.65
+   ],
+   "a_better_pct": 56.0
+  },
+  "runA_vs_yolo_corner_px": {
+   "n": 1086,
+   "median_a": 1.06,
+   "median_b": 1.39,
+   "diff": -0.33,
+   "ci95": [
+    -0.37,
+    -0.28
+   ],
+   "a_better_pct": 71.7
+  }
+ },
+ "runA_flsim": {
+  "test": "flsim",
+  "runA_4pt": {
+   "n": 1088,
+   "corner_px_median": 1.51,
+   "corner_px_mean": 1.61,
+   "pck1": 16.1,
+   "pck2": 77.8,
+   "pos_median_m": 335.2,
+   "pos_over_1km_pct": 17.9,
+   "lat_median_deg": 0.133,
+   "glide_median_deg": 0.216,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 335,
+     "pos_median_m": 80.5,
+     "corner_px_median": 1.61
+    },
+    "mid 2.5-4.5 km": {
+     "n": 403,
+     "pos_median_m": 410.5,
+     "corner_px_median": 1.45
+    },
+    "far >4.5 km": {
+     "n": 350,
+     "pos_median_m": 753.7,
+     "corner_px_median": 1.49
+    }
+   }
+  },
+  "runA_16pt": {
+   "n": 1088,
+   "corner_px_median": 1.51,
+   "corner_px_mean": 1.61,
+   "pck1": 16.1,
+   "pck2": 77.8,
+   "pos_median_m": 343.0,
+   "pos_over_1km_pct": 21.8,
+   "lat_median_deg": 0.154,
+   "glide_median_deg": 0.215,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 335,
+     "pos_median_m": 80.1,
+     "corner_px_median": 1.61
+    },
+    "mid 2.5-4.5 km": {
+     "n": 403,
+     "pos_median_m": 403.8,
+     "corner_px_median": 1.45
+    },
+    "far >4.5 km": {
+     "n": 350,
+     "pos_median_m": 812.3,
+     "corner_px_median": 1.49
+    }
+   }
+  },
+  "pnp16_vs_pnp4_pos_m": {
+   "n": 1076,
+   "median_a": 342.97,
+   "median_b": 335.42,
+   "diff": 7.55,
+   "ci95": [
+    -11.74,
+    39.16
+   ],
+   "a_better_pct": 47.5
+  }
+ },
+ "runA_training": {
+  "epochs": "10 of 10",
+  "n_train": 15925,
+  "n_val": 1723,
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 4.237,
+    "val_loss": 3.089,
+    "val_corner_px_median": 1.625,
+    "val_corner_px_mean": 4.699
+   },
+   {
+    "epoch": 2,
+    "train_loss": 2.514,
+    "val_loss": 2.856,
+    "val_corner_px_median": 1.452,
+    "val_corner_px_mean": 4.465
+   },
+   {
+    "epoch": 3,
+    "train_loss": 2.288,
+    "val_loss": 2.726,
+    "val_corner_px_median": 1.378,
+    "val_corner_px_mean": 4.294
+   },
+   {
+    "epoch": 4,
+    "train_loss": 2.182,
+    "val_loss": 2.65,
+    "val_corner_px_median": 1.339,
+    "val_corner_px_mean": 4.222
+   },
+   {
+    "epoch": 5,
+    "train_loss": 2.09,
+    "val_loss": 2.635,
+    "val_corner_px_median": 1.281,
+    "val_corner_px_mean": 4.221
+   },
+   {
+    "epoch": 6,
+    "train_loss": 1.996,
+    "val_loss": 2.62,
+    "val_corner_px_median": 1.27,
+    "val_corner_px_mean": 4.155
+   },
+   {
+    "epoch": 7,
+    "train_loss": 1.911,
+    "val_loss": 2.534,
+    "val_corner_px_median": 1.21,
+    "val_corner_px_mean": 4.091
+   },
+   {
+    "epoch": 8,
+    "train_loss": 1.813,
+    "val_loss": 2.519,
+    "val_corner_px_median": 1.173,
+    "val_corner_px_mean": 4.07
+   },
+   {
+    "epoch": 9,
+    "train_loss": 1.763,
+    "val_loss": 2.504,
+    "val_corner_px_median": 1.162,
+    "val_corner_px_mean": 4.045
+   },
+   {
+    "epoch": 10,
+    "train_loss": 1.714,
+    "val_loss": 2.499,
+    "val_corner_px_median": 1.143,
+    "val_corner_px_mean": 4.039
+   }
+  ]
+ },
+ "runA_val_by_renderer": {
+  "run": "runA",
+  "note": "validation split (held-out training airports), true box with fixed small jitter, 4 corners",
+  "bingmaps": {
+   "n": 723,
+   "corner_px_median": 1.07,
+   "corner_px_mean": 1.31,
+   "pck1": 43.0,
+   "over_5px_pct": 1.0,
+   "over_20px_pct": 0.0,
+   "share_of_total_error_from_worst_5pct": 15.5
+  },
+  "xplane": {
+   "n": 1000,
+   "corner_px_median": 1.25,
+   "corner_px_mean": 6.02,
+   "pck1": 33.1,
+   "over_5px_pct": 2.1,
+   "over_20px_pct": 1.3,
+   "share_of_total_error_from_worst_5pct": 78.5
+  }
+ },
+ "models_bing_all": {
+  "test": "Bing Maps, all downloaded test runways with a detector box (same runways for every row)",
+  "yolov8_pose": {
+   "n": 1086,
+   "corner_px_median": 1.39,
+   "corner_px_mean": 1.67,
+   "pck1": 25.1,
+   "pck2": 76.2,
+   "pos_median_m": 308.5,
+   "pos_over_1km_pct": 13.7,
+   "lat_median_deg": 0.152,
+   "glide_median_deg": 0.22,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 107.3,
+     "corner_px_median": 1.87
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 394.2,
+     "corner_px_median": 1.28
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 525.3,
+     "corner_px_median": 1.21
+    }
+   }
+  },
+  "resnet50_bing": {
+   "n": 1086,
+   "corner_px_median": 1.13,
+   "corner_px_mean": 1.44,
+   "pck1": 38.1,
+   "pck2": 84.7,
+   "pos_median_m": 325.6,
+   "pos_over_1km_pct": 11.0,
+   "lat_median_deg": 0.146,
+   "glide_median_deg": 0.234,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 97.1,
+     "corner_px_median": 1.65
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 364.8,
+     "corner_px_median": 1.05
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 530.9,
+     "corner_px_median": 1.01
+    }
+   }
+  },
+  "dinov2_bing": {
+   "n": 1086,
+   "corner_px_median": 1.12,
+   "corner_px_mean": 1.43,
+   "pck1": 40.4,
+   "pck2": 83.8,
+   "pos_median_m": 333.9,
+   "pos_over_1km_pct": 14.1,
+   "lat_median_deg": 0.133,
+   "glide_median_deg": 0.239,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 93.9,
+     "corner_px_median": 1.61
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 383.2,
+     "corner_px_median": 1.03
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 636.0,
+     "corner_px_median": 1.0
+    }
+   }
+  },
+  "runA": {
+   "n": 1086,
+   "corner_px_median": 1.06,
+   "corner_px_mean": 1.35,
+   "pck1": 44.4,
+   "pck2": 86.2,
+   "pos_median_m": 288.8,
+   "pos_over_1km_pct": 11.6,
+   "lat_median_deg": 0.133,
+   "glide_median_deg": 0.212,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 73.1,
+     "corner_px_median": 1.51
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 351.8,
+     "corner_px_median": 0.97
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 564.5,
+     "corner_px_median": 0.96
+    }
+   }
+  },
+  "runA_16pt": {
+   "n": 1086,
+   "corner_px_median": 1.06,
+   "corner_px_mean": 1.35,
+   "pck1": 44.4,
+   "pck2": 86.2,
+   "pos_median_m": 290.5,
+   "pos_over_1km_pct": 11.3,
+   "lat_median_deg": 0.128,
+   "glide_median_deg": 0.205,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 320,
+     "pos_median_m": 84.7,
+     "corner_px_median": 1.51
+    },
+    "mid 2.5-4.5 km": {
+     "n": 385,
+     "pos_median_m": 369.9,
+     "corner_px_median": 0.97
+    },
+    "far >4.5 km": {
+     "n": 381,
+     "pos_median_m": 588.9,
+     "corner_px_median": 0.96
+    }
+   }
+  },
+  "resnet50_bing_vs_yolo_corner_px": {
+   "n": 1086,
+   "median_a": 1.13,
+   "median_b": 1.39,
+   "diff": -0.26,
+   "ci95": [
+    -0.3,
+    -0.21
+   ],
+   "a_better_pct": 66.5
+  },
+  "resnet50_bing_vs_yolo_pos_m": {
+   "n": 1086,
+   "median_a": 325.57,
+   "median_b": 308.5,
+   "diff": 17.07,
+   "ci95": [
+    -27.31,
+    46.98
+   ],
+   "a_better_pct": 50.6
+  },
+  "dinov2_bing_vs_yolo_corner_px": {
+   "n": 1086,
+   "median_a": 1.12,
+   "median_b": 1.39,
+   "diff": -0.27,
+   "ci95": [
+    -0.32,
+    -0.23
+   ],
+   "a_better_pct": 67.6
+  },
+  "dinov2_bing_vs_yolo_pos_m": {
+   "n": 1086,
+   "median_a": 333.86,
+   "median_b": 308.5,
+   "diff": 25.36,
+   "ci95": [
+    -18.48,
+    57.2
+   ],
+   "a_better_pct": 48.7
+  },
+  "runA_vs_yolo_corner_px": {
+   "n": 1086,
+   "median_a": 1.06,
+   "median_b": 1.39,
+   "diff": -0.33,
+   "ci95": [
+    -0.37,
+    -0.28
+   ],
+   "a_better_pct": 71.7
+  },
+  "runA_vs_yolo_pos_m": {
+   "n": 1086,
+   "median_a": 288.76,
+   "median_b": 308.5,
+   "diff": -19.73,
+   "ci95": [
+    -62.37,
+    12.47
+   ],
+   "a_better_pct": 56.8
+  },
+  "dinov2_vs_resnet50_corner_px": {
+   "n": 1086,
+   "median_a": 1.12,
+   "median_b": 1.13,
+   "diff": -0.02,
+   "ci95": [
+    -0.05,
+    0.02
+   ],
+   "a_better_pct": 51.2
+  },
+  "dinov2_vs_resnet50_pos_m": {
+   "n": 1086,
+   "median_a": 333.86,
+   "median_b": 325.57,
+   "diff": 8.28,
+   "ci95": [
+    -19.66,
+    37.09
+   ],
+   "a_better_pct": 45.2
+  },
+  "runA_vs_resnet50_corner_px": {
+   "n": 1086,
+   "median_a": 1.06,
+   "median_b": 1.13,
+   "diff": -0.07,
+   "ci95": [
+    -0.1,
+    -0.04
+   ],
+   "a_better_pct": 60.7
+  },
+  "runA_vs_resnet50_pos_m": {
+   "n": 1086,
+   "median_a": 288.76,
+   "median_b": 325.57,
+   "diff": -36.81,
+   "ci95": [
+    -62.92,
+    -7.8
+   ],
+   "a_better_pct": 54.9
+  }
+ },
+ "unseen_renderer_flsim": {
+  "resnet50_bing": {
+   "n": 1088,
+   "corner_px_median": 1.43,
+   "corner_px_mean": 1.69,
+   "pck1": 19.9,
+   "pck2": 75.5,
+   "pos_median_m": 318.4,
+   "pos_over_1km_pct": 14.3,
+   "lat_median_deg": 0.171,
+   "glide_median_deg": 0.23,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 335,
+     "pos_median_m": 107.8,
+     "corner_px_median": 1.71
+    },
+    "mid 2.5-4.5 km": {
+     "n": 403,
+     "pos_median_m": 374.3,
+     "corner_px_median": 1.36
+    },
+    "far >4.5 km": {
+     "n": 350,
+     "pos_median_m": 662.4,
+     "corner_px_median": 1.37
+    }
+   }
+  },
+  "dinov2_bing": {
+   "n": 1088,
+   "corner_px_median": 1.28,
+   "corner_px_mean": 1.46,
+   "pck1": 27.7,
+   "pck2": 82.1,
+   "pos_median_m": 255.7,
+   "pos_over_1km_pct": 9.6,
+   "lat_median_deg": 0.116,
+   "glide_median_deg": 0.199,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 335,
+     "pos_median_m": 77.1,
+     "corner_px_median": 1.53
+    },
+    "mid 2.5-4.5 km": {
+     "n": 403,
+     "pos_median_m": 321.8,
+     "corner_px_median": 1.2
+    },
+    "far >4.5 km": {
+     "n": 350,
+     "pos_median_m": 513.0,
+     "corner_px_median": 1.21
+    }
+   }
+  },
+  "runA": {
+   "n": 1088,
+   "corner_px_median": 1.51,
+   "corner_px_mean": 1.61,
+   "pck1": 16.1,
+   "pck2": 77.8,
+   "pos_median_m": 335.2,
+   "pos_over_1km_pct": 17.9,
+   "lat_median_deg": 0.133,
+   "glide_median_deg": 0.216,
+   "by_distance": {
+    "near <2.5 km": {
+     "n": 335,
+     "pos_median_m": 80.5,
+     "corner_px_median": 1.61
+    },
+    "mid 2.5-4.5 km": {
+     "n": 403,
+     "pos_median_m": 410.5,
+     "corner_px_median": 1.45
+    },
+    "far >4.5 km": {
+     "n": 350,
+     "pos_median_m": 753.7,
+     "corner_px_median": 1.49
+    }
+   }
+  },
+  "dinov2_vs_resnet50_corner_px": {
+   "n": 1088,
+   "median_a": 1.28,
+   "median_b": 1.43,
+   "diff": -0.15,
+   "ci95": [
+    -0.19,
+    -0.11
+   ],
+   "a_better_pct": 62.8
+  },
+  "dinov2_vs_resnet50_pos_m": {
+   "n": 1088,
+   "median_a": 255.75,
+   "median_b": 318.38,
+   "diff": -62.63,
+   "ci95": [
+    -95.22,
+    -33.95
+   ],
+   "a_better_pct": 59.1
+  },
+  "runA_vs_resnet50_corner_px": {
+   "n": 1088,
+   "median_a": 1.51,
+   "median_b": 1.43,
+   "diff": 0.07,
+   "ci95": [
+    0.02,
+    0.11
+   ],
+   "a_better_pct": 49.0
+  },
+  "runA_vs_resnet50_pos_m": {
+   "n": 1088,
+   "median_a": 335.25,
+   "median_b": 318.38,
+   "diff": 16.87,
+   "ci95": [
+    -26.0,
+    52.32
+   ],
+   "a_better_pct": 51.7
+  }
+ },
+ "multirunway_and_wrong_runway": [
+  {
+   "run": "dinov2_bing",
+   "test": "bing662",
+   "n_images": 55,
+   "single_runway_median_m": 488.1,
+   "joint_median_m": 43.1,
+   "diff_ci95": [
+    -508.7,
+    -256.3
+   ],
+   "joint_better_pct": 92.7,
+   "wrong_runway": {
+    "n_images": 55,
+    "correct_pct": 96.4,
+    "median_true_lateral_gap_deg": 1.53
+   }
+  },
+  {
+   "run": "dinov2_bing",
+   "test": "bing_all",
+   "n_images": 92,
+   "single_runway_median_m": 493.2,
+   "joint_median_m": 41.6,
+   "diff_ci95": [
+    -506.7,
+    -321.3
+   ],
+   "joint_better_pct": 92.4,
+   "wrong_runway": {
+    "n_images": 92,
+    "correct_pct": 96.7,
+    "median_true_lateral_gap_deg": 1.67
+   }
+  },
+  {
+   "run": "resnet50_bing",
+   "test": "bing662",
+   "n_images": 55,
+   "single_runway_median_m": 386.6,
+   "joint_median_m": 48.6,
+   "diff_ci95": [
+    -472.4,
+    -246.9
+   ],
+   "joint_better_pct": 90.9,
+   "wrong_runway": {
+    "n_images": 55,
+    "correct_pct": 96.4,
+    "median_true_lateral_gap_deg": 1.53
+   }
+  },
+  {
+   "run": "resnet50_bing",
+   "test": "bing_all",
+   "n_images": 92,
+   "single_runway_median_m": 407.7,
+   "joint_median_m": 44.5,
+   "diff_ci95": [
+    -481.3,
+    -281.0
+   ],
+   "joint_better_pct": 92.4,
+   "wrong_runway": {
+    "n_images": 92,
+    "correct_pct": 96.7,
+    "median_true_lateral_gap_deg": 1.67
+   }
+  },
+  {
+   "run": "runA",
+   "test": "bing_all",
+   "n_images": 92,
+   "single_runway_median_m": 421.4,
+   "joint_median_m": 45.9,
+   "diff_ci95": [
+    -467.9,
+    -269.5
+   ],
+   "joint_better_pct": 92.4,
+   "wrong_runway": {
+    "n_images": 92,
+    "correct_pct": 95.7,
+    "median_true_lateral_gap_deg": 1.67
+   }
+  }
+ ]
+}

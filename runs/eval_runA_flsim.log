@@ -1,0 +1,3 @@
+runA (resnet50, 16 kp) on flsim: 1200 runways with a detector box
+IN_ODD n=1088 medians: {'corner_px': 1.51, 'pos4': 335.25, 'pos16': 342.97}
+python3 -m corners.evaluate2 --run runA --test flsim  25.37s user 5.80s system 118% cpu 26.360 total

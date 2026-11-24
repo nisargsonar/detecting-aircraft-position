@@ -1,0 +1,3 @@
+runA (resnet50, 16 kp) on bing_all: 1234 runways with a detector box
+IN_ODD n=1086 medians: {'corner_px': 1.06, 'pos4': 288.76, 'pos16': 290.47, 'yolo_corner_px': 1.39, 'yolo_pos': 308.5}
+python3 -m corners.evaluate2 --run runA --test bing_all  26.73s user 6.12s system 113% cpu 28.836 total

@@ -1,0 +1,12 @@
+resnet50 n_kp=16 data=bing_xplane: train labels 15925  val labels 1723
+{"epoch": 1, "train_loss": 4.236808275312965, "val_loss": 3.0894625738815025, "val_corner_px_median": 1.6251275539398193, "val_corner_px_mean": 4.698540687561035, "sec": 4490.448146104813}
+{"epoch": 2, "train_loss": 2.5138320726168226, "val_loss": 2.8559761864167674, "val_corner_px_median": 1.4521723985671997, "val_corner_px_mean": 4.4650702476501465, "sec": 1473.6204867362976}
+{"epoch": 3, "train_loss": 2.2884441645332507, "val_loss": 2.725751949681176, "val_corner_px_median": 1.3781930208206177, "val_corner_px_mean": 4.293967247009277, "sec": 6790.537356138229}
+{"epoch": 4, "train_loss": 2.181893369321612, "val_loss": 2.649920333314825, "val_corner_px_median": 1.3387877941131592, "val_corner_px_mean": 4.222332954406738, "sec": 11867.425729990005}
+{"epoch": 5, "train_loss": 2.089994528403944, "val_loss": 2.6346943731661194, "val_corner_px_median": 1.2813386917114258, "val_corner_px_mean": 4.220613479614258, "sec": 813.1567571163177}
+{"epoch": 6, "train_loss": 1.995874033967254, "val_loss": 2.61956650018692, "val_corner_px_median": 1.270050287246704, "val_corner_px_mean": 4.155362129211426, "sec": 841.7468180656433}
+{"epoch": 7, "train_loss": 1.9111423443260807, "val_loss": 2.533651899408411, "val_corner_px_median": 1.2097265720367432, "val_corner_px_mean": 4.091169357299805, "sec": 862.8852350711823}
+{"epoch": 8, "train_loss": 1.8134861235887232, "val_loss": 2.518539603109713, "val_corner_px_median": 1.172804832458496, "val_corner_px_mean": 4.070013046264648, "sec": 867.3341991901398}
+{"epoch": 9, "train_loss": 1.7629203599703385, "val_loss": 2.5044154436499984, "val_corner_px_median": 1.1624023914337158, "val_corner_px_mean": 4.044651985168457, "sec": 873.1246938705444}
+{"epoch": 10, "train_loss": 1.7138070765155662, "val_loss": 2.49935386467863, "val_corner_px_median": 1.1429669857025146, "val_corner_px_mean": 4.0393524169921875, "sec": 871.8343229293823}
+best val median corner error (px, full image): 1.143

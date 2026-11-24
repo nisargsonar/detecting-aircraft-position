@@ -1,0 +1,263 @@
+<title>Runway Corner Pose</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column like an approach plate, with wide figure bands; amber = approach lights, used sparingly */
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#15202b; --ink2:#4c5866; --rule:#d9dee5;
+  --accent:#d98a00; --accent-soft:#fbf1dc; --blue:#2a6fc9; --orange:#e0612f; --good:#1d8a3a;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151c; --panel:#16202b; --ink:#e7ecf2; --ink2:#9aa7b5; --rule:#2a3643;
+  --accent:#f0a623; --accent-soft:#2b2412; --blue:#5b9bea; --orange:#f07a4a; --good:#4cc26a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c; --panel:#16202b; --ink:#e7ecf2; --ink2:#9aa7b5; --rule:#2a3643;
+  --accent:#f0a623; --accent-soft:#2b2412; --blue:#5b9bea; --orange:#f07a4a; --good:#4cc26a; color-scheme:dark}
+html{height:auto;overflow-y:auto;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);height:auto;min-height:100%;overflow:visible}
+.wrap{max-width:1040px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.75rem;font-weight:600}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0;max-width:66ch}
+.eyebrow{font:500 .78rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+section{display:grid;gap:18px;padding-block:44px;border-top:1px solid var(--rule)}
+header{display:grid;gap:16px;padding-bottom:36px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--ink2);font-size:.95rem}
+.chip{display:inline-flex;align-items:center;gap:6px;font:500 .78rem var(--mono);padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--ink);border:1px solid var(--accent)}
+.lede{font-size:1.15rem;color:var(--ink)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:18px;display:grid;gap:8px;align-content:start;min-width:0}
+.quote{border-left:3px solid var(--accent);padding:6px 0 6px 16px;max-width:70ch}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.strip div{background:var(--panel);padding:14px 16px;display:grid;gap:2px}
+.num{font:600 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.small{font-size:.88rem;color:var(--ink2)}
+.tbl{overflow-x:auto;border:1px solid var(--rule);border-radius:8px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:.93rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:500 .75rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+tr.us td{background:var(--accent-soft)}
+.gap{font-size:1.05rem;font-weight:500;background:var(--panel);border:1px solid var(--accent);border-radius:8px;padding:14px 18px;max-width:none}
+ol.pipe{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;counter-reset:s}
+ol.pipe li{counter-increment:s;background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:16px;display:grid;gap:6px}
+ol.pipe li::before{content:counter(s);font:600 .8rem var(--mono);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg)}
+ol.pipe li.ml{border-color:var(--accent)}
+.tag{font:500 .72rem var(--mono);color:var(--ink2)}
+/* simulation */
+.sim{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:18px;display:grid;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:500 .9rem var(--body);padding:8px 14px;border-radius:6px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);cursor:pointer}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stage{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.view{position:relative;aspect-ratio:1;max-width:100%;border-radius:8px;overflow:hidden;background:#000}
+.view img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:auto}
+.view svg{position:absolute;inset:0;width:100%;height:100%}
+.explain{display:grid;gap:12px;min-width:0}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.readout div{background:var(--bg);padding:10px 12px;display:grid;gap:2px}
+.readout b{font:600 1.15rem var(--display);font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem;color:var(--ink2)}
+.legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:6px}
+input[type=range]{width:100%;accent-color:var(--accent);touch-action:pan-y}
+figure{margin:0;display:grid;gap:8px}
+figure img{width:100%;border-radius:8px;border:1px solid var(--rule);background:#fff}
+figcaption{font-size:.88rem;color:var(--ink2)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.mr{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.mr .card img{width:100%;border-radius:6px;aspect-ratio:1;object-fit:cover}
+.mr .vs{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;font-size:.92rem}
+.big{display:flex;flex-wrap:wrap;gap:26px;align-items:baseline}
+.big b{font:700 2.4rem var(--display);font-variant-numeric:tabular-nums}
+.phases{display:grid;gap:8px}
+.phase{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:12px 16px}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--ink2)}
+.done .dot{background:var(--good);border-color:var(--good)} .wip .dot{background:var(--accent);border-color:var(--accent)}
+.status{font:500 .78rem var(--mono);color:var(--ink2);white-space:nowrap}
+ul{margin:0;padding-left:20px;display:grid;gap:6px;max-width:72ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">VIZA 669 · Course project · Progress update, week 6</span>
+  <h1>Runway corners to aircraft position</h1>
+  <p class="lede">From one forward camera image during a landing approach, find the runway's four corners precisely and compute where the aircraft is: distance to the runway, left/right offset and glide angle. No ILS or GPS needed.</p>
+  <div class="meta"><span>Nisarg Sonar</span><span>Dataset: LARD V2 (Airbus / ONERA / IRT)</span><span class="chip">Phase 3 of 5 in progress</span></div>
+</header>
+
+<section id="why">
+  <span class="eyebrow">Why it matters</span>
+  <h2>Precision approach guidance still depends on ground equipment</h2>
+  <div class="grid3">
+    <div class="card"><h3>ILS is missing</h3><p class="small">Instrument Landing Systems need costly ground antennas. Many regional and smaller airfields have none.</p></div>
+    <div class="card"><h3>GPS can be jammed</h3><p class="small">GPS jamming and spoofing near conflict zones have grown sharply since 2023.</p></div>
+    <div class="card"><h3>A camera works anywhere</h3><p class="small">It needs only the runway's surveyed corners, so it gives an independent cross-check at any runway.</p></div>
+  </div>
+  <p class="quote">During my American Airlines internship this summer, I learned that pilots sometimes face these issues at smaller airports and in smaller, less-equipped aircraft. A vision-based aid could help most there.</p>
+  <p class="small">Why accuracy matters: on final approach an airliner covers about 72 m per second.</p>
+  <div class="strip">
+    <div><span class="num">90 m</span><span class="small">≈ 1 s of flight · usable</span></div>
+    <div><span class="num">330 m</span><span class="small">≈ 5 s · rough</span></div>
+    <div><span class="num">780 m</span><span class="small">≈ 11 s · not usable</span></div>
+    <div><span class="num">2.8 km</span><span class="small">≈ 40 s · box detector only</span></div>
+  </div>
+</section>
+
+<section id="prior">
+  <span class="eyebrow">What already exists</span>
+  <h2>Detection is solved; precise pose is not</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Work</th><th>What it does</th><th>Limitation</th></tr></thead>
+    <tbody>
+      <tr><td>LARD 2.0 (ERTS 2026)</td><td>Released the dataset; runway bounding boxes with YOLOv8/v11, mAP50 ≈ 0.97</td><td>Boxes only. Corners and pose left as future work</td></tr>
+      <tr><td>YOLO-RWY (Drones 2024)</td><td>Improved runway box detector</td><td>Boxes only; AP falls from 0.76 to 0.41 on hard real images</td></tr>
+      <tr><td>Ferreira et al. (WACV 2025)</td><td>Tracks the runway, YOLOv8-pose corners, then PnP</td><td>Old single-runway dataset; pose tested on 2 runways; 460–960 m distance error</td></tr>
+      <tr><td>Valentin et al. (DASC 2025)</td><td>Corner keypoints with calibrated uncertainty</td><td>Assumes a perfect crop; no detector in the loop; one renderer</td></tr>
+      <tr><td>Theau &amp; Ducoffe (arXiv 2026)</td><td>YOLOv8-Pose + PnP on LARD V2, used to test robustness to rotations</td><td>Model is a test subject, not improved; one overall number (~201 m)</td></tr>
+      <tr class="us"><td><b>This project</b></td><td>Benchmark and improve corner-based pose on LARD V2</td><td>Full-test-set baseline, crop + heatmap model, CNN vs ViT, multi-runway pose</td></tr>
+    </tbody>
+  </table></div>
+  <p class="gap">Gap: every method uses the four corners of a single runway, nobody reports how corner accuracy turns into position error across distance, and nobody compares CNN and Transformer backbones for this task.</p>
+</section>
+
+<section id="method">
+  <span class="eyebrow">Our method</span>
+  <h2>Detect, zoom in, find corners, solve the geometry</h2>
+  <ol class="pipe">
+    <li><h3>Detect</h3><p class="small">The released LARD YOLO detector finds the runway box.</p><span class="tag">pretrained · L6</span></li>
+    <li><h3>Crop</h3><p class="small">Cut the box with a margin and resize to 256×256, so a 16 px runway fills the input.</p><span class="tag">resampling · L2</span></li>
+    <li class="ml"><h3>Corner network</h3><p class="small">ResNet-50 + upsampling head gives 4 heatmaps; soft-argmax reads each corner with sub-pixel precision.</p><span class="tag">what we train · L6</span></li>
+    <li><h3>Pose (PnP)</h3><p class="small">Known 3D corners + detected pixels → camera position, distance and angles. IPPE solver plus our physical constraints.</p><span class="tag">geometry · no learning</span></li>
+  </ol>
+  <p class="small">Training: loss = MSE on heatmaps + L1 on corner coordinates, gradient descent on batches of 64×256×256×3 crops. Camera: 60° field of view, focal length ≈ 887 px.</p>
+</section>
+
+<section id="sim">
+  <span class="eyebrow">Interactive</span>
+  <h2>How the model works on a real test image</h2>
+  <div class="sim">
+    <div class="row" role="group" aria-label="Example image">
+      <span class="small">Example:</span>
+      <button id="ex0" data-ex="0">Near · 1.2 km</button><button id="ex1" data-ex="1">Mid · 3.2 km</button><button id="ex2" data-ex="2">Far · 5.4 km</button>
+    </div>
+    <div class="row" role="group" aria-label="Pipeline step">
+      <span class="small">Step:</span>
+      <button id="st0" data-st="0">1 · Frame</button><button id="st1" data-st="1">2 · Crop</button><button id="st2" data-st="2">3 · Heatmaps</button><button id="st3" data-st="3">4 · Corners + pose</button>
+    </div>
+    <div class="stage">
+      <div class="view"><img id="vimg" alt="Pipeline stage image"><svg id="vsvg" viewBox="0 0 512 512" aria-hidden="true"></svg></div>
+      <div class="explain">
+        <h3 id="stitle"></h3>
+        <p id="stext" class="small"></p>
+        <div class="legend" id="legend" hidden><span><i style="background:#fff"></i>True corners</span><span><i style="background:var(--blue)"></i>Ours</span><span><i style="background:var(--orange)"></i>YOLOv8-Pose</span></div>
+        <div class="readout" id="readout"></div>
+        <div id="sliderbox" hidden style="display:grid;gap:8px">
+          <label for="noise" class="small">What if the corners were off by <b id="nval">0.0</b> px?</label>
+          <input id="noise" type="range" min="0" max="3" step="0.25" value="0">
+          <p class="small" id="noiseout"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <span class="eyebrow">Results so far</span>
+  <h2>Better corners than the baseline; positions tied, until we use both runways</h2>
+  <div class="big">
+    <div><b>1.38 px → 308 m</b><p class="small">Released YOLOv8-Pose on the full test set (47,191 runways, unseen airports)</p></div>
+    <div><b>1.12 px</b><p class="small">Our corner error vs 1.39 px for YOLOv8-Pose on the same 662 runways (19% better, significant)</p></div>
+    <div><b>387 → 52 m</b><p class="small">Median position error, one runway vs both runways jointly (59 images)</p></div>
+  </div>
+  <div class="two">
+    <figure><img src="img/fig1_baseline_by_distance.png" alt="Bar chart: median position error by distance for true corners and YOLOv8-Pose"><figcaption>Baseline. Error grows with distance; far runways are the bottleneck.</figcaption></figure>
+    <figure><img src="img/fig3_ours_vs_yolov8pose.png" alt="Bar chart: ours vs YOLOv8-Pose position error by distance"><figcaption>Our first model vs YOLOv8-Pose. Corners are better, but position is statistically tied (320 vs 302 m; 95% CI of the difference −26 to +65 m).</figcaption></figure>
+  </div>
+  <h3>New: using every visible runway at once</h3>
+  <p class="small">At multi-runway airports a second runway is often hundreds of metres away. Solving one camera pose from all eight corners pins down distance far better than four corners of one runway. Same trained model, no retraining. White = true corners, blue = our predictions.</p>
+  <div class="mr" id="mr"></div>
+  <p class="small">Across all 59 test images with two labelled runways: median 387 m with the target runway alone, 52 m jointly (95% CI of the improvement −472 to −243 m); joint is better on 92% of images. Small sample, so this is a first indication.</p>
+</section>
+
+<section id="next">
+  <span class="eyebrow">Status and next steps</span>
+  <h2>About half done; three weeks left</h2>
+  <div class="phases">
+    <div class="phase done"><span class="dot"></span><span><b>1 · Data pipeline and baseline</b> <span class="small">· full test set, two dataset issues fixed</span></span><span class="status">Done</span></div>
+    <div class="phase done"><span class="dot"></span><span><b>2 · ResNet-50 corner model</b> <span class="small">· 1.12 px corners</span></span><span class="status">Done</span></div>
+    <div class="phase wip"><span class="dot"></span><span><b>3 · Pose integration and improvements</b> <span class="small">· pose done, multi-runway done; edge keypoints next</span></span><span class="status">In progress</span></div>
+    <div class="phase"><span class="dot"></span><span><b>4 · DINOv2 Vision Transformer, cross-renderer test</b></span><span class="status">Week 7</span></div>
+    <div class="phase"><span class="dot"></span><span><b>5 · Demos, final results, presentation</b></span><span class="status">Weeks 8–9</span></div>
+  </div>
+  <h3>Current challenges</h3>
+  <ul>
+    <li>Better corner accuracy did not yet give better single-runway position. Next: train with a loss on position error and add edge keypoints.</li>
+    <li>Far runways (over 4.5 km) stay near 500 m error; even perfect corners give about 200 m there.</li>
+    <li>Data issues: two renderers' files lack aircraft poses (filled from the shared scenarios), and download rate limits left the test subset at 717 of 1,200 images.</li>
+    <li>Compute: about 5.5 minutes per epoch on a laptop GPU; work started a week behind plan.</li>
+  </ul>
+</section>
+</div>
+
+<script>
+const D = {"multi":[{"img":"multi_KOAK.jpg","airport":"KOAK","runways":"28L + 28R","km":4.7,"single":820,"joint":7},{"img":"multi_CYYZ.jpg","airport":"CYYZ","runways":"06R + 06L","km":5.5,"single":1377,"joint":6},{"img":"multi_GMMN.jpg","airport":"GMMN","runways":"35R + 35L","km":5.0,"single":2036,"joint":82},{"img":"multi_VECC.jpg","airport":"VECC","runways":"19L + 19R","km":4.4,"single":98,"joint":234}],"sims":[{"airport":"LEBB","runway":"12","km":1.19,"lat_true":-2.61,"glide_true":2.46,"height_ft":205,"gt":[[113.2,184.0],[175.4,178.9],[383.0,318.9],[216.9,334.5]],"ours":[[109.9,183.1],[176.3,174.0],[387.2,317.0],[212.0,337.1]],"yolo":[[115.5,182.6],[176.7,174.5],[396.5,313.3],[197.0,337.5]],"ours_px":0.9,"yolo_px":2.03,"ours_pos":138,"yolo_pos":189,"true_pos":41,"ours_lat":0.23,"ours_glide":0.07,"side_px":99},{"airport":"EDDV","runway":"09L","km":3.24,"lat_true":1.79,"glide_true":4.72,"height_ft":962,"gt":[[316.4,134.0],[356.9,140.8],[235.4,390.5],[154.4,377.0]],"ours":[[316.3,123.2],[362.4,131.0],[234.0,383.8],[151.3,375.0]],"yolo":[[316.7,121.3],[365.4,124.6],[244.6,390.7],[146.6,380.4]],"ours_px":1.21,"yolo_px":1.8,"ours_pos":376,"yolo_pos":774,"true_pos":84,"ours_lat":0.25,"ours_glide":0.27,"side_px":76},{"airport":"LPPR","runway":"35","km":5.38,"lat_true":1.01,"glide_true":2.53,"height_ft":964,"gt":[[258.9,161.0],[310.1,161.0],[271.7,353.0],[182.1,353.0]],"ours":[[258.1,153.8],[320.2,154.3],[282.2,354.4],[181.1,350.0]],"yolo":[[261.1,154.4],[322.0,154.0],[285.6,356.0],[190.0,358.0]],"ours_px":0.64,"yolo_px":0.86,"ours_pos":573,"yolo_pos":329,"true_pos":422,"ours_lat":0.11,"ours_glide":0.07,"side_px":40}],"curve":{"corner_error_px":[0.0,0.25,0.5,0.75,1.0,1.25,1.5,2.0,2.5,3.0],"median_position_error_m":[90.0,106.0,172.0,249.0,343.0,412.0,533.0,723.0,950.0,1098.0],"seconds_of_flight_at_72mps":[1.2,1.5,2.4,3.5,4.8,5.7,7.4,10.0,13.2,15.3]}};
+const steps = [
+  {t:"1 · The camera frame", x:"The full 1024×1024 image from the nose camera. The released YOLO detector finds the runway; the amber square is the crop we cut around its box. Far out, the runway is only a few pixels wide."},
+  {t:"2 · Zoomed-in crop", x:"The crop is resized to 256×256 (shown at 512), so the network sees the runway large. This is the network's input tensor: 256 × 256 × 3."},
+  {t:"3 · Corner heatmaps", x:"The network outputs four 64×64 heatmaps, one per corner, overlaid here. Bright spots are where it believes each corner is. A softmax-weighted average of each heatmap gives a sub-pixel (x, y)."},
+  {t:"4 · Corners and aircraft position", x:"The predicted corners go into PnP with the runway's surveyed 3D corners. The solver returns the camera position, from which we compute distance and the two path angles, then compare with the dataset's ground truth."}
+];
+let ex = 0, st = 3;
+const $ = id => document.getElementById(id);
+const fmt = v => v.toLocaleString('en-US');
+function poly(pts, col, w, dash){ return `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linejoin="round" ${dash?'stroke-dasharray="6 4"':''}/>` + pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="${w+1.5}" fill="${col}"/>`).join(''); }
+function interp(x){ const c=D.curve, xs=c.corner_error_px, ys=c.median_position_error_m; for(let i=1;i<xs.length;i++){ if(x<=xs[i]){ const f=(x-xs[i-1])/(xs[i]-xs[i-1]); return ys[i-1]+f*(ys[i]-ys[i-1]); } } return ys[ys.length-1]; }
+function noisy(pts, px, scale){ let s=7; const r=()=>{ s=(s*16807)%2147483647; return (s/2147483647)*2-1; }; return pts.map(p=>[p[0]+r()*px*scale, p[1]+r()*px*scale]); }
+function render(){
+  const s = D.sims[ex];
+  document.querySelectorAll('[data-ex]').forEach(b=>b.setAttribute('aria-pressed', +b.dataset.ex===ex));
+  document.querySelectorAll('[data-st]').forEach(b=>b.setAttribute('aria-pressed', +b.dataset.st===st));
+  $('vimg').src = `img/sim${ex}_${['frame','crop','heat','crop'][st]}.jpg`;
+  $('stitle').textContent = steps[st].t; $('stext').textContent = steps[st].x;
+  const cs = getComputedStyle(document.documentElement);
+  const blue = cs.getPropertyValue('--blue').trim(), orange = cs.getPropertyValue('--orange').trim();
+  let svg = '';
+  const n = +$('noise').value;
+  if (st === 3){
+    svg += poly(s.gt,'#ffffff',2.5) + poly(s.yolo,orange,2,true);
+    svg += poly(n>0 ? noisy(s.gt, n, 512/s.side_px) : s.ours, blue, 2);
+  }
+  $('vsvg').innerHTML = svg;
+  $('legend').hidden = st !== 3; $('sliderbox').hidden = st !== 3;
+  const R = [];
+  R.push(['Airport · runway', `${s.airport} · ${s.runway}`], ['Distance to threshold', `${s.km} km`]);
+  if (st < 3){ R.push(['True glide angle', `${s.glide_true}°`], ['Height above runway', `${fmt(s.height_ft)} ft`]); }
+  else {
+    R.push(['Corner error · ours', `${s.ours_px} px`], ['Corner error · YOLOv8-Pose', `${s.yolo_px} px`],
+           ['Position error · ours', `${fmt(s.ours_pos)} m`], ['Position error · YOLOv8-Pose', `${fmt(s.yolo_pos)} m`],
+           ['Lateral angle error · ours', `${s.ours_lat}°`], ['Glide angle error · ours', `${s.ours_glide}°`]);
+  }
+  $('readout').innerHTML = R.map(([k,v])=>`<div><span class="small">${k}</span><b>${v}</b></div>`).join('');
+  $('nval').textContent = n.toFixed(2);
+  const m = Math.round(interp(n));
+  $('noiseout').textContent = n === 0 ? `Blue shows our real prediction. Move the slider to replace it with true corners plus random error of that size; the number below uses our measured error curve (357 test images).`
+    : `Typical position error at ${n.toFixed(2)} px: about ${fmt(m)} m, or ${(m/72).toFixed(1)} s of flight. Blue now shows true corners with that much random error.`;
+}
+document.querySelectorAll('[data-ex]').forEach(b=>b.addEventListener('click',()=>{ ex=+b.dataset.ex; render(); }));
+document.querySelectorAll('[data-st]').forEach(b=>b.addEventListener('click',()=>{ st=+b.dataset.st; render(); }));
+$('noise').addEventListener('input', render);
+$('mr').innerHTML = D.multi.map(c=>`<div class="card"><img src="img/${c.img}" alt="${c.airport} runways ${c.runways}">
+  <h3>${c.airport} · ${c.runways}</h3><span class="small">${c.km} km out</span>
+  <div class="vs"><span>One runway</span><b>${fmt(c.single)} m</b></div>
+  <div class="vs"><span>Both runways</span><b style="color:${c.joint<c.single?'var(--good)':'var(--orange)'}">${fmt(c.joint)} m</b></div></div>`).join('');
+render();
+</script>

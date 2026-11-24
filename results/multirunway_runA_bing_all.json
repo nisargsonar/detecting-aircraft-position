@@ -1,0 +1,17 @@
+{
+ "run": "runA",
+ "test": "bing_all",
+ "n_images": 92,
+ "single_runway_median_m": 421.4,
+ "joint_median_m": 45.9,
+ "diff_ci95": [
+  -467.9,
+  -269.5
+ ],
+ "joint_better_pct": 92.4,
+ "wrong_runway": {
+  "n_images": 92,
+  "correct_pct": 95.7,
+  "median_true_lateral_gap_deg": 1.67
+ }
+}

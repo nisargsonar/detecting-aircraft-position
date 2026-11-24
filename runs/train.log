@@ -1,0 +1,12 @@
+train labels 4599  val labels 723
+{"epoch": 1, "train_loss": 5.225002954056213, "val_corner_px_median": 1.999537467956543, "val_corner_px_mean": 2.5622873306274414, "sec": 328.6315357685089}
+{"epoch": 2, "train_loss": 2.3846361570424968, "val_corner_px_median": 1.550384283065796, "val_corner_px_mean": 2.100910186767578, "sec": 2014.024365901947}
+{"epoch": 3, "train_loss": 1.9990754002457731, "val_corner_px_median": 1.3021141290664673, "val_corner_px_mean": 1.6658297777175903, "sec": 299.0483548641205}
+{"epoch": 4, "train_loss": 1.7509693815991596, "val_corner_px_median": 1.2027226686477661, "val_corner_px_mean": 1.5801068544387817, "sec": 285.16163897514343}
+{"epoch": 5, "train_loss": 1.481280766167007, "val_corner_px_median": 1.2307425737380981, "val_corner_px_mean": 1.5467406511306763, "sec": 265.1280310153961}
+{"epoch": 6, "train_loss": 1.372221018050934, "val_corner_px_median": 1.210193395614624, "val_corner_px_mean": 1.5432461500167847, "sec": 259.3525881767273}
+{"epoch": 7, "train_loss": 1.2749172274049345, "val_corner_px_median": 1.1749892234802246, "val_corner_px_mean": 1.4570248126983643, "sec": 3967.501132965088}
+{"epoch": 8, "train_loss": 1.1983349873469427, "val_corner_px_median": 1.079187035560608, "val_corner_px_mean": 1.3830004930496216, "sec": 246.94179010391235}
+{"epoch": 9, "train_loss": 1.1420574104869283, "val_corner_px_median": 1.0649834871292114, "val_corner_px_mean": 1.3460712432861328, "sec": 20726.84083199501}
+{"epoch": 10, "train_loss": 1.106914965422837, "val_corner_px_median": 1.089218020439148, "val_corner_px_mean": 1.374575138092041, "sec": 13708.952719211578}
+best val median corner error (px, full image): 1.065

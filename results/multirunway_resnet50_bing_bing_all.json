@@ -1,0 +1,17 @@
+{
+ "run": "resnet50_bing",
+ "test": "bing_all",
+ "n_images": 92,
+ "single_runway_median_m": 407.7,
+ "joint_median_m": 44.5,
+ "diff_ci95": [
+  -481.3,
+  -281.0
+ ],
+ "joint_better_pct": 92.4,
+ "wrong_runway": {
+  "n_images": 92,
+  "correct_pct": 96.7,
+  "median_true_lateral_gap_deg": 1.67
+ }
+}
