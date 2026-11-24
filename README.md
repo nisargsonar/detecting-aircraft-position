@@ -19,9 +19,14 @@ camera image (1024²) → YOLO runway box → crop 1.6× the box, resize to 256�
 image, where the runway is often ~20 px. This project zooms into the runway first and predicts a heatmap per
 corner, so a corner can land between pixels. The runway box and the geometry are the same for both.
 
-![Demo: YOLO box, zoomed crop with true / YOLO / ours corners, heatmaps](demo/out/demo_near_0.png)
+### Demo
 
-A screen recording of the demo is in `Recording of pipeline.mp4`.
+![Demo: one command runs a test image through every model; the figure shows the YOLO box, the zoomed crop with true / YOLO / our corners, and our heatmaps; the table gives distance and angle errors](demo/pipeline_demo.gif)
+
+`python3 demo/demo_one.py --pick near` on a test image from an airport never seen in training. Panel 1: YOLO's box
+(the runway is ~33 × 29 px). Panel 2: zoomed crop, white = true corners, orange = YOLO, blue = ours. Panel 3: our
+heatmaps, one bright spot per corner. Table: true distance 1,906 m; YOLO's corners give 155 m position error, ours 19 m.
+Full-quality video: [`Recording of pipeline.mp4`](Recording%20of%20pipeline.mp4).
 
 ## Results (Bing Maps test set, 1,086 runways at unseen airports, medians)
 
