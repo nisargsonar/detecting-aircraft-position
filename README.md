@@ -19,6 +19,8 @@ camera image (1024²) → YOLO runway box → crop 1.6× the box, resize to 256�
 image, where the runway is often ~20 px. This project zooms into the runway first and predicts a heatmap per
 corner, so a corner can land between pixels. The runway box and the geometry are the same for both.
 
+![Demo: YOLO box, zoomed crop with true / YOLO / ours corners, heatmaps](demo/out/demo_near_0.png)
+
 ### Demo
 
 ![Demo: one command runs a test image through every model; the figure shows the YOLO box, the zoomed crop with true / YOLO / our corners, and our heatmaps; the table gives distance and angle errors](demo/pipeline_demo.gif)
